@@ -37,13 +37,10 @@ notify_capture () {
     ""|"close"|"dismissed"|"timeout")
         # closed or timed out without action
         ;;
-    "edit"|"1")
+    "edit")
         wl-paste | ksnip -
         ;;
     "default"|"2")
-        save_screenshot "$preview_file"
-        ;;
-    *)
         save_screenshot "$preview_file"
         ;;
     esac
