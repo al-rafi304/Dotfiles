@@ -1,37 +1,66 @@
 # grim -g "$(slurp)" -c $HOME/Pictures/Screenshots/$(date +'%s(%m-%d-%y).png') && notify
 # FILE=$HOME/Pictures/Screenshots
 
-save_screenshot () {
-    file="$HOME/Pictures/Screenshots/$(date +'%s(%m-%d-%y).png')"
-    wl-paste > $file
+CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/myscripts"
+PREVIEW_FILE="$CACHE_DIR/screenshot-preview.png"
+mkdir -p "$CACHE_DIR"
 
-    ACTION=$(dunstify --action="default,Reply" -i folder-open "Screenshot saved!" "Click to open file location")
+save_screenshot () {
+    local source_file="$1"
+    file="$HOME/Pictures/Screenshots/$(date +'%s(%m-%d-%y).png')"
+
+    if [[ -n "$source_file" && -f "$source_file" ]]; then
+        cp "$source_file" "$file"
+    else
+        wl-paste > "$file"
+    fi
+
+    ACTION=$(dunstify --action="default,Reply" -I "$file" -i folder-open "Screenshot saved!" "Click to open file location")
     case "$ACTION" in
     "2")
-        thunar $file
+        thunar "$file"
         ;;
     esac
 }
 
 notify_capture () {
-    ACTION=$(dunstify --action="default,Reply" -i paste "Screenshot copied to clipboard" "Click to save")
-    # ACTION=$(dunstify \
-    #     --action="default,Save" \
-    #     --action="ksnip,Edit" \
-    #     -i paste "Screenshot copied to clipboard" "Choose an action")
+    local preview_file="$1"
+
+    ACTION=$(dunstify \
+        --action="edit,Edit in Ksnip" \
+        -I "$preview_file" \
+        -i paste \
+        "Screenshot copied to clipboard" \
+        "Left click to save, middle click to edit")
 
     case "$ACTION" in
-    "2")
-        save_screenshot
+    ""|"close"|"dismissed"|"timeout")
+        # closed or timed out without action
         ;;
-    "1")
+    "edit"|"1")
         wl-paste | ksnip -
+        ;;
+    "default"|"2")
+        save_screenshot "$preview_file"
+        ;;
+    *)
+        save_screenshot "$preview_file"
         ;;
     esac
 }
 
 if [[ "$1" == "--now" ]]; then
-    grim - | wl-copy && save_screenshot
+    if grim - | tee "$PREVIEW_FILE" | wl-copy; then
+        save_screenshot "$PREVIEW_FILE"
+    fi
 else
-    grim -g "$(slurp)" - | wl-copy && notify_capture
+    selection=$(slurp)
+
+    if [[ -z "$selection" ]]; then
+        exit 1
+    fi
+
+    if grim -g "$selection" - | tee "$PREVIEW_FILE" | wl-copy; then
+        notify_capture "$PREVIEW_FILE"
+    fi
 fi
