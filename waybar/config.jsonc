@@ -17,12 +17,14 @@
         "custom/weather"
     ],
     "modules-right": [
+        "tray",
         "custom/spotify",
         "pulseaudio",
         "custom/pulseaudio-style",
         "network",
         "network#speed",
         "custom/vpn",
+        "custom/notification",
         "custom/power"
     ],
     "hyprland/workspaces": {
@@ -46,6 +48,12 @@
         "format-alt": " {:%A, %dth %b %Y}",
         "interval": 1
     },
+    "tray": {
+    "icon-size": 20,
+    "spacing": 5,
+    "show-passive-items": true,
+    "tooltip": true
+},
     "cpu": {
         "interval": 1,
         "format": "󰄧 {usage}%",
@@ -158,6 +166,27 @@
         "interval": 1,
         "exec": "~/.config/waybar/scripts/check_recording.sh",
         "on-click": "~/.config/myscripts/screenrecord.sh"
-    }
+    },
+    "custom/notification": {
+        "tooltip": true,
+        "format": "<span size='13pt'>{icon}</span>",
+        // "format": "{0} {icon}",
+        "format-icons": {
+        "notification": "󱅫",
+        "none": "󰂜",
+        "dnd-notification": "󰂠",
+        "dnd-none": "󰪓",
+        "inhibited-notification": "󰂛",
+        "inhibited-none": "󰪑",
+        "dnd-inhibited-notification": "󰂛",
+        "dnd-inhibited-none": "󰪑"
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
 
 }

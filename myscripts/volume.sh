@@ -10,11 +10,11 @@ msgTag="volume"
 # Query amixer for the current volume and whether or not the speaker is muted
 
 increase_volume() {
-    pactl set-sink-volume @DEFAULT_SINK@ +1% && notify
+    pactl set-sink-volume @DEFAULT_SINK@ +1% #&& notify
 }
 
 decrease_volume() {
-    pactl set-sink-volume @DEFAULT_SINK@ -1% && notify
+    pactl set-sink-volume @DEFAULT_SINK@ -1% #&& notify
 }
 
 toggle_mute() {
