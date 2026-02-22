@@ -22,11 +22,8 @@
   --noti-close-bg: rgba(88, 91, 112, 0.55);   /* surface2 @ alpha */
   --noti-close-bg-hover: rgba(88, 91, 112, 0.75);
 
-  --urgent: rgb(230, 69, 83);
-
   /*--text-color: rgb(205, 214, 244);           /* text */
   --text-color: rgb(255, 255, 255);
-  --text-color-dark: rgb(24, 24, 37); 
   --text-color-disabled: rgb(108, 112, 134);  /* overlay0 */
   --bg-selected: rgb(137, 180, 250);          /* blue */
 
@@ -35,7 +32,7 @@
   --notification-group-icon-size: 32px;
 
   --border: 1px solid var(--noti-border-color);
-  --border-radius: 20px;
+  --border-radius: 12px;
 
   --notification-shadow:
     0 0 0 1px rgba(17, 17, 27, 0.45),         /* crust-ish */
@@ -348,7 +345,6 @@ notificationwindow, blankwindow {
   background: var(--cc-bg);
   color: var(--text-color);
   border-radius: var(--border-radius);
-  border: var(--border);
 }
 
 .control-center .control-center-list-placeholder {
@@ -448,7 +444,7 @@ notificationwindow, blankwindow {
 .widget-mpris .widget-mpris-player {
   margin: 16px 5px;
   border-radius: var(--border-radius);
-  box-shadow: none;
+  box-shadow: var(--mpris-album-art-shadow);
 }
 
 .widget-mpris .widget-mpris-player .mpris-background {
@@ -467,7 +463,7 @@ notificationwindow, blankwindow {
 
 .widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-album-art {
   border-radius: var(--border-radius);
-  box-shadow: none;
+  box-shadow: var(--mpris-album-art-shadow);
   -gtk-icon-size: var(--mpris-album-art-icon-size);
 }
 
@@ -501,35 +497,12 @@ notificationwindow, blankwindow {
 /* Buttons widget */
 .widget-buttons-grid flowboxchild > button {
   border-radius: var(--border-radius);
-  background: transparent;
-  /* margin-left: 10px;  */
-}
-.widget-buttons-grid flowboxchild > button:hover {
-  background: var(--noti-bg-hover);
-  transition: var(--hover-tranistion);
-}
-
-
-.widget-buttons-grid flowboxchild > button.toggle:checked {
-    /* style given to the active toggle button */
-    background: var(--urgent);
-    color: var(--text-color-dark);
-}
-
-.widget-buttons-grid {
-  margin-top: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
-  padding-left: 20px;
-  background: var(--noti-close-bg)
   
 }
 
-.widget-buttons-grid flowboxchild:hover {
-  background: transparent;
+.widget-buttons-grid flowboxchild > button.toggle:checked {
+  /* style given to the active toggle button */
 }
-
-
 
 /* Menubar widget */
 .widget-menubar {
