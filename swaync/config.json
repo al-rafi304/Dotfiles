@@ -50,7 +50,6 @@
     "volume",
     "slider#mic",
     "title",
-    "dnd",
     "notifications",
     "mpris"
   ],
@@ -58,7 +57,7 @@
     "title": {
       "text": "Notifications",
       "clear-all-button": true,
-      "button-text": "󰎟"
+      "button-text": "Clear  󰎟"
     },
     "dnd": {
       "text": "Do not disturb"
@@ -100,11 +99,11 @@
           "update-command": "pactl get-source-mute @DEFAULT_SOURCE@ | grep yes && echo true || echo false"
         },
         {
-          "label": " ",
+          "label": "󰪓",
           "type": "toggle",
           "active": true,
-          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'",
-          "update-command": "sh -c '[[ $(nmcli radio wifi) == \"enabled\" ]] && echo true || echo false'"
+          "command": "swaync-client -d",
+          "update-command": "swaync-client -D"
         },
         {
           "label": "󰻜 ",
