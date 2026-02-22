@@ -446,7 +446,7 @@ notificationwindow, blankwindow {
 }
 
 .widget-mpris .widget-mpris-player {
-  margin: 16px 5px;
+  margin: 16px 0px;
   border-radius: var(--border-radius);
   box-shadow: none;
 }
@@ -491,7 +491,10 @@ notificationwindow, blankwindow {
 
 .widget-mpris > box > button {
   /* Change player side buttons */
-  padding: 0px
+  padding: 0px;
+  margin: 0px;
+  min-width: 0px;
+  color: transparent
 }
 
 .widget-mpris > box > button:disabled {
