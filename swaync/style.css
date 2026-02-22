@@ -15,14 +15,15 @@
   --cc-bg: rgba(24, 24, 37, 0.6);            /* mantle @ 0.80 */
   --noti-border-color: #89b4fa;               /* blue */
   --noti-bg: 30, 30, 46;                      /* base (kept as "r,g,b" for swaync) */
-  --noti-bg-alpha: 0.88;                      /* slightly more opaque */
+  --noti-bg-alpha: 0.55;                      /* slightly more opaque */
   --noti-bg-darker: rgb(24, 24, 37);          /* mantle */
   --noti-bg-hover: rgb(49, 50, 68);           /* surface0 */
   --noti-bg-focus: rgba(69, 71, 90, 0.65);    /* surface1 @ alpha */
   --noti-close-bg: rgba(88, 91, 112, 0.55);   /* surface2 @ alpha */
   --noti-close-bg-hover: rgba(88, 91, 112, 0.75);
 
-  --text-color: rgb(205, 214, 244);           /* text */
+  /*--text-color: rgb(205, 214, 244);           /* text */
+  --text-color: rgb(255, 255, 255);
   --text-color-disabled: rgb(108, 112, 134);  /* overlay0 */
   --bg-selected: rgb(137, 180, 250);          /* blue */
 
@@ -38,8 +39,8 @@
     0 1px 3px 1px rgba(17, 17, 27, 0.75),
     0 2px 6px 2px rgba(17, 17, 27, 0.45);
 
-  --font-size-body: 15px;
-  --font-size-summary: 16px;
+  --font-size-body: 14px;
+  --font-size-summary: 15px;
 
   /* Deprecated variables (typos) kept for compatibility */
   --hover-tranistion: background 0.15s ease-in-out;
@@ -106,7 +107,7 @@ notificationwindow, blankwindow {
   /* The actual notification */
   border-radius: var(--border-radius);
   border: var(--border);
-  padding: 0;
+  padding: 5px 10px;
   transition: var(--hover-tranistion);
   background: rgba(var(--noti-bg), var(--noti-bg-alpha));
 }
@@ -271,7 +272,8 @@ notificationwindow, blankwindow {
 }
 
 .notification-group:focus {
-  background: var(--noti-bg-focus);
+  /* background: var(--noti-bg-focus); */
+  background: transparent;
 }
 
 .notification-group.low {
@@ -385,14 +387,14 @@ notificationwindow, blankwindow {
 /*** Widgets ***/
 .widget {
   margin: 8px;
-  padding: 8px;
+  padding: 2px 8px;
   border-radius: var(--border-radius);
 }
 
 /* Title widget */
 .widget-title > label {
   margin-right: 8px;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
 }
 
 .widget-title > button {
@@ -418,7 +420,12 @@ notificationwindow, blankwindow {
 
 /* Label widget */
 .widget-label > label {
-  font-size: 1.1rem;
+    font-size: 1.5rem;
+}
+
+.widget-label {
+    padding: 10px;
+    text-align: center;
 }
 
 /* Mpris widget */
@@ -435,7 +442,7 @@ notificationwindow, blankwindow {
 }
 
 .widget-mpris .widget-mpris-player {
-  margin: 16px 20px;
+  margin: 16px 5px;
   border-radius: var(--border-radius);
   box-shadow: var(--mpris-album-art-shadow);
 }
@@ -445,7 +452,7 @@ notificationwindow, blankwindow {
 }
 
 .widget-mpris .widget-mpris-player .mpris-overlay {
-  padding: 16px;
+  padding: 14px;
   background-color: var(--mpris-album-art-overlay);
 }
 
@@ -471,6 +478,7 @@ notificationwindow, blankwindow {
 
 .widget-mpris .widget-mpris-player .mpris-overlay > box > button {
   /* Change player control buttons */
+  margin-top: 5px;
 }
 
 .widget-mpris .widget-mpris-player .mpris-overlay > box > button:hover {
@@ -479,6 +487,7 @@ notificationwindow, blankwindow {
 
 .widget-mpris > box > button {
   /* Change player side buttons */
+  padding: 0px
 }
 
 .widget-mpris > box > button:disabled {
