@@ -48,6 +48,7 @@
   "widgets": [
     "buttons-grid",
     "volume",
+    "slider#mic",
     "title",
     "dnd",
     "notifications",
@@ -73,6 +74,15 @@
     "volume": {
       "label": "󰕾",
         "show-per-app": true
+    },
+    "slider#mic": {
+      "label": "",
+      "max": 120,
+      "min": 0,
+      "max_limit": 120,
+      "min_limit": 0,
+      "cmd_getter": "pactl get-source-volume @DEFAULT_SOURCE@ | grep -o '[0-9]*%' | head -n 1 | tr -d '%'",
+      "cmd_setter": "pactl set-source-volume @DEFAULT_SOURCE@ $value%"
     },
     "buttons-grid": {
       "actions": [
