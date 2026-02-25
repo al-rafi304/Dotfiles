@@ -15,9 +15,14 @@ save_screenshot () {
         wl-paste > "$file"
     fi
 
-    ACTION=$(dunstify --action="default,Reply" -I "$file" -i folder-open "Screenshot saved!" "Click to open file location")
+    ACTION=$(notify-send \
+        --action="open=Open Location" \
+        -i "$file" \
+        "Screenshot saved!" \
+        "Click to open file location")
+
     case "$ACTION" in
-    "2")
+    "open")
         thunar "$file"
         ;;
     esac
@@ -26,22 +31,19 @@ save_screenshot () {
 notify_capture () {
     local preview_file="$1"
 
-    ACTION=$(dunstify \
-        --action="edit,Edit in Ksnip" \
-        -I "$preview_file" \
-        -i paste \
-        "Screenshot copied to clipboard" \
-        "Left click to save, middle click to edit")
+    ACTION=$(notify-send \
+        --action="save=Save" \
+        --action="edit=Edit" \
+        -i "$preview_file" \
+        "Screenshot captured" \
+        "What would you like to do?")
 
     case "$ACTION" in
-    ""|"close"|"dismissed"|"timeout")
-        # closed or timed out without action
+    "save")
+        save_screenshot "$preview_file"
         ;;
     "edit")
         wl-paste | ksnip -
-        ;;
-    "default"|"2")
-        save_screenshot "$preview_file"
         ;;
     esac
 }
