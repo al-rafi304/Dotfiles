@@ -10,11 +10,11 @@ msgTag="volume"
 # Query amixer for the current volume and whether or not the speaker is muted
 
 increase_volume() {
-    pactl set-sink-volume @DEFAULT_SINK@ +1% #&& notify
+    pactl set-sink-volume @DEFAULT_SINK@ +1% && notify
 }
 
 decrease_volume() {
-    pactl set-sink-volume @DEFAULT_SINK@ -1% #&& notify
+    pactl set-sink-volume @DEFAULT_SINK@ -1% && notify
 }
 
 toggle_mute() {
@@ -37,10 +37,10 @@ get_mute() {
 notify() {
     if [[ "$(get_volume)" == "0%" || "$(get_mute)" == "yes" ]]; then
         # Show the sound muted notification
-        dunstify -a "changeVolume" -i audio-volume-muted -h string:x-dunst-stack-tag:$msgTag "Volume muted" 
+        notify-send -a "changeVolume" -i audio-volume-muted -h string:synchronous:$msgTag "Volume muted" 
     else
         # Show the volume notification
-        dunstify -a "changeVolume" -i audio-volume-medium -h string:x-dunst-stack-tag:$msgTag \
+        notify-send -a "changeVolume" -i audio-volume-medium -h int:value:"$(get_volume | tr -d '%')" -h string:synchronous:$msgTag \
         "Volume: $(get_volume)"
     fi
 }
