@@ -620,3 +620,15 @@ notificationwindow, blankwindow {
   margin-left: 8px;
   border-radius: var(--border-radius);
 }
+
+/* Hide scrollbar */
+scrollbar, scrollbar trough, scrollbar slider {
+  min-width: 0px;
+  min-height: 0px;
+  background-color: transparent;
+  border-width: 0px;
+  border-color: transparent;
+  color: transparent;
+  visibility: hidden;
+  display: none;
+}
