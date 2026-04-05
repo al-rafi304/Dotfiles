@@ -20,7 +20,6 @@
         "tray",
         "custom/spotify",
         "pulseaudio",
-        "custom/pulseaudio-style",
         "network",
         "network#speed",
         "custom/vpn",
@@ -147,6 +146,7 @@
         "return-type": "json"
     },
     "custom/launcher": {
+        "format": {},
         "exec": "~/.config/waybar/scripts/launcher.sh && tail -f /tmp/launch_icon",
         "interval": 0,
         "on-click": "~/.config/waybar/scripts/launcher.sh --click",
