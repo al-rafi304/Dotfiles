@@ -58,9 +58,10 @@ class Weather:
             'rain_prcnt': None,
             'temp_min': None,
             'temp_max': None,
+            'humidity': None
         }
 
-        self.url = "https://api.open-meteo.com/v1/forecast?latitude=23.625&longitude=90.375&current=temperature_2m,precipitation,rain,weather_code,wind_speed_10m,wind_direction_10m&hourly=temperature_2m,precipitation_probability,weather_code,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto"
+        self.url = "https://api.open-meteo.com/v1/forecast?latitude=23.625&longitude=90.375&current=temperature_2m,relative_humidity_2m,precipitation,rain,weather_code,wind_speed_10m,wind_direction_10m&hourly=temperature_2m,precipitation_probability,weather_code,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto"
         self.save_file = '/tmp/weather_data.txt'
     
     def run(self, type='hourly'):
@@ -112,6 +113,7 @@ class Weather:
         self.data['rain_prcnt'] = data['hourly']['precipitation_probability'][self.data['current_hour']]
         self.data['temp_min'] = round(data['daily']['temperature_2m_min'][0])
         self.data['temp_max'] = round(data['daily']['temperature_2m_max'][0])
+        self.data['humidity'] = data['current']['relative_humidity_2m']
 
         for i in range(1, 6):
             # Hourly Data
@@ -147,10 +149,11 @@ class Weather:
             return
 
         tooltip_text = str.format(
-            "{} \n{} \n{} \n{} \n\n{}\t{}\t{}\t{}\t{} \n{}\t{}\t{}\t{}\t{} \n{}\t{}\t{}\t{}\t{}",
+            "{} \n{} \n{} \n{} \n{} \n\n{}\t{}\t{}\t{}\t{} \n{}\t{}\t{}\t{}\t{} \n{}\t{}\t{}\t{}\t{}",
             f'<span foreground="{self.colors['rosewater']}" size="large">{self.data['weather_temp']}°C</span>',
             f'<span foreground="{self.colors['text']}">{self.weather_icons[self.data['weather_code']]['info']}</span> <span foreground="{self.weather_icons[self.data['weather_code']]['color']}" size="x-large">{self.data['weather_icon']}</span> ',
             f'<span foreground="{self.colors['text']}">Rain:</span> <span foreground="{self.colors['blue'] if int(self.data['rain_prcnt'])>=40 else self.colors['text']}"><span size="small">󰖌</span>{self.data['rain_prcnt']}%</span>',
+            f'<span foreground="{self.colors['text']}">Humidity:</span> <span foreground="{self.colors['text']}"><span size="small"></span>{self.data['humidity']}%</span>',
             f'<span foreground="{self.colors['text']}" size="smaller">H:{self.data['temp_max']}° L:{self.data['temp_min']}°</span>',
             f'<span foreground="{self.colors['text']}" size="small">{self.data[type]['time'][0]}</span>',
             f'<span foreground="{self.colors['text']}" size="small">{self.data[type]['time'][1]}</span>',
